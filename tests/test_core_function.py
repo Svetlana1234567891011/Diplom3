@@ -48,7 +48,8 @@ class TestMainFunctionality:
         main_page.wait_for_modal_header()
         main_page.click_cross_of_modal()
 
-        assert not main_page.try_out_opening_of_modal()
+        assert not main_page.try_out_opening_of_modal_true()
+
 
     @allure.title('Добавление ингредиента в заказы увеличивает счетчик этого ингредиента')
     def test_drag_and_drop_ingredient_to_basket_increases_ingredient_count(self, driver):
