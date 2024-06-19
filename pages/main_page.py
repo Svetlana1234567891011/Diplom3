@@ -1,6 +1,5 @@
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
-
 from pages.base_page import BasePage
 from utils.locators import MainPageLocators
 import allure
@@ -33,12 +32,22 @@ class MainPage(BasePage):
         self.click_element(MainPageLocators.FIRST_INGREDIENT)
 
     @allure.step('Проверяем видимость модального окна')
+    def try_out_opening_of_modal_true(self):
+
+        elements = self.find_elements(By.XPATH, MainPageLocators.INGREDIENT_MODAL_XPATH)
+        return elements
+
+    @allure.step('Проверяем видимость модального окна')
     def try_out_opening_of_modal(self):
-        try:
-            self.driver.find_element(By.XPATH, MainPageLocators.INGREDIENT_MODAL_XPATH)
-        except NoSuchElementException:
-            return False
-        return True
+        # try:
+        self.find_element(By.XPATH, MainPageLocators.INGREDIENT_MODAL_XPATH)
+        #elements = self.driver.find_element(By.XPATH, MainPageLocators.INGREDIENT_MODAL_XPATH)
+        # return self.is_modal_visible()
+        # except NoSuchElementException:
+        #     return False
+        return self.find_element(By.XPATH, MainPageLocators.INGREDIENT_MODAL_XPATH)
+
+
 
     @allure.step('Ждем загрузки заголовка модального окна')
     def wait_for_modal_header(self):
@@ -46,13 +55,13 @@ class MainPage(BasePage):
 
     @allure.step('Нажимаем на крестик, закрывающий модальное окно')
     def click_cross_of_modal(self):
-        #self.wait_for_element_loaded(MainPageLocators.CLOSE_MODAL).click()
-        close_modal_button=self.wait_loading_of_element(MainPageLocators.CLOSE_MODAL)
-        self.driver.execute_script("arguments[0].click();", close_modal_button)
+        # self.wait_for_element_loaded(MainPageLocators.CLOSE_MODAL).click()
+        close_modal_button = self.wait_loading_of_element(MainPageLocators.CLOSE_MODAL)
+        self.click_element_first_index("arguments[0].click();", close_modal_button)
 
     @allure.step('Получаем значение счетчика ингредиента')
     def get_value_of_ingredient_counter(self):
-        return self.driver.find_element(By.XPATH, MainPageLocators.FIRST_INGREDIENT_COUNTER_XPATH).text
+        return self.find_element(By.XPATH, MainPageLocators.FIRST_INGREDIENT_COUNTER_XPATH).text
 
     @allure.step('Перетаскиваем первый ингредиент в корзину')
     def drag_n_drop_first_ingredient_to_basket(self):
@@ -65,19 +74,9 @@ class MainPage(BasePage):
     @allure.step('Получаем значение ID заказа при его оформлении')
     def get_order_id(self):
         self.wait_for_disappear(MainPageLocators.TEMPORARY_ORDER_MODAL_HEADER)
-        return self.driver.find_element(By.XPATH, MainPageLocators.ORDER_ID_XPATH).text
+        return self.find_element(By.XPATH, MainPageLocators.ORDER_ID_XPATH).text
 
     @allure.step('Создаем заказ')
     def make_order(self):
         self.drag_n_drop_first_ingredient_to_basket()
         self.click_button_of_making_order()
-
-
-
-
-
-
-
-
-
-
