@@ -16,7 +16,7 @@ class TestPrivateArea:
         assert login_page.wait_for_private_area_submit_button()
 
     @allure.title('Из личного кабинета можно перейти в Историю Заказов')
-    def test_private_area_route_to_history(self, driver, user_with_payload, cleanup_user):
+    def test_private_area_route_to_history(self, driver, user_with_payload):
         login_page = LoginPage(driver)
         login_page.open_page(subdir=URLS.LOGIN_PAGE_SECTION)
         login_page.wait_for_login_page_header()
@@ -34,7 +34,7 @@ class TestPrivateArea:
         assert login_page.try_out_url(URLS.HISTORY_SECTION)
 
     @allure.title('Из личного кабинета можно Выйти из аккаунта')
-    def test_account_logout(self, driver, user_with_payload, cleanup_user):
+    def test_account_logout(self, driver, user_with_payload):
         entrance_page = LoginPage(driver)
         entrance_page.open_page(URLS.LOGIN_PAGE_SECTION)
         entrance_page.wait_for_login_page_header()
