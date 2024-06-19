@@ -7,9 +7,7 @@ import allure
 from utils.special_requests import generate_random_string
 from utils.urls import URLS
 
-randoms_string = generate_random_string(10)
 
-email = fake.email()
 
 
 class TestPasswordRecovery:
@@ -26,12 +24,11 @@ class TestPasswordRecovery:
 
     @allure.title('По кнопке Восстановить пароль переходим на страницу восстановления пароля')
     def test_password_reset_for_valid_email(self, driver):
-        #payload = create_user_payload(name='randoms_string', password='randoms_string', email='email')
-
+        
         password_recovery_page = PasswordRecoveryPage(driver)
         password_recovery_page.open_page(subdir=URLS.RECOVER_PASSWORD_SECTION)
         password_recovery_page.wait_for_recovery_page_header()
-        email_new_one = email
+        email_new_one = fake.email()
         password_recovery_page.enter_email(email_new_one)
         password_recovery_page.recover_button_click()
         reset_password_page = PasswordResetPage(driver)
@@ -40,17 +37,16 @@ class TestPasswordRecovery:
         assert reset_password_page.try_out_url(subdir=URLS.RECOVER_PASSWORD_SECTION)
 
     @allure.title('Кнопка "Показать пароль" делает поле ввода пароля активным')
-    def test_password_reset_gets_highlighted(self, driver):
+    def test_password_reset_gets_highlighted(self, driver, generate_random_string_10):
         password_recovery_page = PasswordRecoveryPage(driver)
         password_recovery_page.open_page(subdir=URLS.RECOVER_PASSWORD_SECTION)
         password_recovery_page.wait_for_recovery_page_header()
-        email_new_one = email
+        email_new_one = fake.email()
         password_recovery_page.enter_email(email_new_one)
         password_recovery_page.recover_button_click()
         reset_password_page = PasswordResetPage(driver)
         reset_password_page.wait_for_recovery_page_header()
-        password_new = 'randoms_string'
-        #reset_password_page.enter_email(email_new) #ввести мейл
+        password_new = generate_random_string_10
         reset_password_page.enter_password(password_new)
         reset_password_page.show_password_click()
 
