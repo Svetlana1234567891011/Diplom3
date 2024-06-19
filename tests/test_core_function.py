@@ -63,7 +63,7 @@ class TestMainFunctionality:
         assert initial_value < updated_value
 
     @allure.title('Залогиненный пользователь может оформить заказ')
-    def test_login_user_can_place_order(self, driver, user_with_payload):
+    def test_login_user_can_place_order(self, driver, user_with_payload, cleanup_user):
         entrance_page = LoginPage(driver)
         entrance_page.open_page(URLS.LOGIN_PAGE_SECTION)
         entrance_page.wait_for_login_page_header()
