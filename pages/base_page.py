@@ -53,8 +53,17 @@ class BasePage:
         ActionChains(self.driver).drag_and_drop(drag, drop).perform()
 
     @allure.step('Ждем исчезновения элемента из DOMа')
-    def wait_for_disappear(self, locator, time=10):
+    def wait_for_disappear(self, locator):
         WebDriverWait(self.driver, 20).until(EC.invisibility_of_element_located(locator))
+
+    def find_element(self, by, locator):
+        return self.driver.find_element(by, locator)
+
+    def find_elements(self, by, locator):
+        return self.driver.find_elements(by, locator)
+
+    def click_element_first_index(self, script, element):
+        self.driver.execute_script(script, element)
 
 
 
