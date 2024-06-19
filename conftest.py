@@ -72,8 +72,8 @@ def user_with_payload(create_payload):
     response_new = user_requests.post_create_courier(data=payload)
     access_token = response_new.get('accessToken')
     created_users_list.append(user_requests)
-    if access_token:
-        user_requests.access_token = access_token
+
+    user_requests.access_token = access_token
     return user_requests
 
 
