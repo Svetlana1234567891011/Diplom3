@@ -64,7 +64,7 @@ created_users_list = []
 
 
 @pytest.fixture(scope='function')
-def user_with_payload(create_payload, cleanup_user):
+def user_with_payload(create_payload):
     user_requests = UserRequests()
     # Создаем пользователя
     payload = create_payload
@@ -74,21 +74,12 @@ def user_with_payload(create_payload, cleanup_user):
     created_users_list.append(user_requests)
 
     user_requests.access_token = access_token
-    cleanup_user['token'] = access_token
+    
     return user_requests
 
 
 
-@pytest.fixture()
-def cleanup_user():
-    response = {}
-
-    yield response
-    if 'token' in response:
-        UserRequests().delete_user(token=response['token'])
-
-
-@pytest.fixture(scope='module', autouse=True)
+@pytest.fixture(scope='function', autouse=True)
 def cleanup_user_once():
     response = {}
 
