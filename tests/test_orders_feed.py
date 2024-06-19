@@ -22,7 +22,7 @@ class TestOrdersLine:
         assert orders_line.check_order_details_modal_opened() and order_id == new_id
 
     @allure.title('Заказы пользователя из раздела «История заказов» отображаются на странице «Лента заказов»')
-    def test_new_order_in_orders_feed(self, driver, user_with_payload, cleanup_user):
+    def test_new_order_in_orders_feed(self, driver, user_with_payload):
         entrance_page = LoginPage(driver)
         entrance_page.open_page(URLS.LOGIN_PAGE_SECTION)
         entrance_page.wait_for_login_page_header()
@@ -47,7 +47,7 @@ class TestOrdersLine:
         assert orders_line.check_order_id_in_orders_line(order_id)
 
     @allure.title('При создании нового заказа счётчик Выполнено за всё время увеличивается')
-    def test_new_order_total_and_current_orders_count(self, driver, user_with_payload, cleanup_user):
+    def test_new_order_total_and_current_orders_count(self, driver, user_with_payload):
         entrance_page = LoginPage(driver)
         entrance_page.open_page(URLS.LOGIN_PAGE_SECTION)
         entrance_page.wait_for_login_page_header()
@@ -71,7 +71,7 @@ class TestOrdersLine:
         assert new_total_count > total_count and new_today_count > today_count
 
     @allure.title('После оформления заказа его номер появляется в разделе В работе')
-    def test_new_order_in_progress_orders(self, driver, user_with_payload, cleanup_user):
+    def test_new_order_in_progress_orders(self, driver, user_with_payload):
         entrance_page = LoginPage(driver)
         entrance_page.open_page(URLS.LOGIN_PAGE_SECTION)
         entrance_page.wait_for_login_page_header()
